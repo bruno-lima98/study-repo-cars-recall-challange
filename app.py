@@ -16,7 +16,10 @@ for col in df.columns:
 df = df.rename(columns={"idade_veículo": "idade_veiculo", "reclamações": "reclamacoes"})
 
 df['reclamacoes'] = pd.to_numeric(df['reclamacoes'])
-df['recall'] = df['recall'].replace({"não": 0, "sim": 1})
+
+df['recall'] = df['recall'].astype(str).str.lower().str.strip()
+df['recall'] = df['recall'].map({'sim': 1, 'não': 0, 'nao': 0, '1': 1, '0': 0}).fillna(0)
+
 df['idade_veiculo'] = pd.to_numeric(df['idade_veiculo'])
 df['km'] = pd.to_numeric(df['km'])
 
